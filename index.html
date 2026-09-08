@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="refresh" content="600" />
+  <title>EcliptOS L2 · Who is on shift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c1118;
+      --bg-elev: #141b25;
+      --line: rgba(232, 236, 243, 0.08);
+      --text: #eef2f7;
+      --muted: #93a0b5;
+      --now: #f3b14e;
+      --next: #7eb6ff;
+      --weekend: #5fd4a8;
+      --danger: #f07178;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Instrument Sans", sans-serif;
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(243, 177, 78, 0.12), transparent 50%),
+        radial-gradient(800px 480px at 110% 0%, rgba(126, 182, 255, 0.1), transparent 46%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 48px; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-end;
+      margin-bottom: 28px;
+    }
+
+    .kicker {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    h1 { font-size: 28px; font-weight: 650; letter-spacing: -0.03em; margin: 0; }
+
+    .clock-box { text-align: right; }
+    .clock {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 28px;
+      letter-spacing: -0.04em;
+    }
+    .clock small { color: var(--muted); font-size: 13px; margin-left: 8px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%), var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px;
+      min-height: 220px;
+    }
+
+    .now { grid-column: 1 / -1; min-height: 280px; }
+    .now .label { color: var(--now); }
+    .next .label { color: var(--next); }
+    .weekend .label { color: var(--weekend); }
+
+    .label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .name {
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 650;
+      margin: 0 0 16px;
+    }
+
+    .side .name { font-size: clamp(28px, 3.4vw, 42px); }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      border-radius: 999px;
+      padding: 6px 12px;
+      color: var(--text);
+    }
+
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+
+    .names { display: flex; flex-direction: column; gap: 10px; }
+    .names .name { margin: 0; }
+
+    .foot {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .drop {
+      margin-top: 16px;
+      border: 1px dashed rgba(232, 236, 243, 0.16);
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .drop strong { display: block; margin-bottom: 4px; }
+    .drop span { color: var(--muted); font-size: 13px; }
+
+    button, .file-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      background: #eef2f7;
+      color: #10151d;
+      font: inherit;
+      font-weight: 600;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    a { color: inherit; }
+
+    .warn { color: var(--now); }
+    .empty { color: var(--muted); font-size: 28px; letter-spacing: -0.04em; }
+
+    @media (max-width: 860px) {
+      header, .grid, .foot, .drop { display: block; }
+      .clock-box { text-align: left; margin-top: 16px; }
+      .card { margin-bottom: 12px; }
+      .drop button { margin-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="kicker">EcliptOS · L2 coverage</div>
+        <h1>Who is on shift</h1>
+      </div>
+      <div class="clock-box">
+        <div class="clock" id="clock">--:--:-- <small>IST</small></div>
+        <div class="kicker" id="refreshHint">Auto-refresh in 10:00</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card now">
+        <div class="label"><span class="dot" style="color: var(--now)"></span> On shift now</div>
+        <p class="name" id="nowName">Loading…</p>
+        <div class="meta" id="nowMeta"></div>
+      </section>
+
+      <section class="card next side">
+        <div class="label"><span class="dot" style="color: var(--next)"></span> Next up</div>
+        <p class="name" id="nextName">Loading…</p>
+        <div class="meta" id="nextMeta"></div>
+      </section>
+
+      <section class="card weekend side">
+        <div class="label"><span class="dot" style="color: var(--weekend)"></span> Weekend on-call</div>
+        <div class="names" id="weekendNames"></div>
+        <div class="meta" id="weekendMeta"></div>
+      </section>
+    </div>
+
+    <div class="drop" id="drop">
+      <div>
+        <strong>Load the official roster</strong>
+        <span>SharePoint needs login, so drop <em>Eclipt OS L2 Roster.xlsx</em> here. The board keeps using it after refresh.</span>
+      </div>
+      <label class="file-btn">
+        Choose Excel
+        <input id="file" type="file" accept=".xlsx,.xls,.csv" hidden />
+      </label>
+    </div>
+
+    <div class="foot">
+      <div id="source"></div>
+      <div>
+        <a href="https://mckinsey-my.sharepoint.com/:x:/r/personal/sophia_solomon_external_mckinsey_com/_layouts/15/doc2.aspx?sourcedoc=%7B9F40FC09-FF8D-4B6B-92D2-FAA9E7F722D2%7D&file=Eclipt%20OS%20L2%20Roster.xlsx&action=default&mobileredirect=true&share=cQoJ_ECfjf9rS5LS-qnn9yLSEgUChleFsg8MpdMPWL_MJpJb0A" target="_blank" rel="noreferrer">Open roster in SharePoint</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script>
+    const TZ = "Asia/Kolkata";
+    const REFRESH_MS = 10 * 60 * 1000;
+    const STORAGE_KEY = "eclipt-l2-roster-v1";
+
+    const DEFAULT_ROSTER = {
+      timezone: TZ,
+      source: "Reconstructed from #eclipt-sre handovers. Drop the Excel file to replace this with the official roster.",
+      shifts: [
+        { id: "morning", label: "Morning", start: "06:00", end: "15:00" },
+        { id: "evening", label: "Evening", start: "15:00", end: "22:00" },
+        { id: "night", label: "Night", start: "22:00", end: "06:00" }
+      ],
+      weekdayPattern: {
+        morning: "Arun Yadav",
+        evening: "Mahesh Suse",
+        night: "Harshita Jain"
+      },
+      days: {
+        "2026-08-31": { morning: "Arun Yadav", evening: "Mahesh Suse", night: "Harshita Jain" },
+        "2026-09-01": { morning: "Arun Yadav", evening: "Mahesh Suse", night: "Harshita Jain" },
+        "2026-09-02": { morning: "Arun Yadav", evening: "Mahesh Suse", night: "Harshita Jain" },
+        "2026-09-03": { morning: "Arun Yadav", evening: "Mahesh Suse", night: "Harshita Jain" },
+        "2026-09-04": { morning: "Kiran Rathod", evening: "Mahesh Suse", night: "Harshita Jain" },
+        "2026-09-05": { morning: "Tammisetti Sundar" },
+        "2026-09-07": { morning: "Arun Yadav", evening: "Mahesh Suse", night: "Harshita Jain" },
+        "2026-09-08": { morning: "Arun Yadav", evening: "Mahesh Suse", night: "Harshita Jain" }
+      },
+      weekends: [
+        {
+          start: "2026-09-06",
+          end: "2026-09-07",
+          names: ["Kiran Rathod", "Tammisetti Sundar"],
+          note: "Monitor mail and chat"
+        }
+      ]
+    };
+
+    let roster = loadRoster();
+    const pageLoadedAt = Date.now();
+
+    function loadRoster() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (saved && saved.days) return saved;
+      } catch (_) {}
+      return structuredClone(DEFAULT_ROSTER);
+    }
+
+    function saveRoster(next) {
+      roster = next;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      render();
+    }
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    function istParts(date = new Date()) {
+      const fmt = new Intl.DateTimeFormat("en-GB", {
+        timeZone: TZ,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        weekday: "short",
+        hourCycle: "h23"
+      });
+      const map = Object.fromEntries(fmt.formatToParts(date).map((p) => [p.type, p.value]));
+      return {
+        year: Number(map.year),
+        month: Number(map.month),
+        day: Number(map.day),
+        hour: Number(map.hour),
+        minute: Number(map.minute),
+        second: Number(map.second),
+        weekday: map.weekday
+      };
+    }
+
+    function isoFromParts(p) {
+      return `${p.year}-${pad(p.month)}-${pad(p.day)}`;
+    }
+
+    function addDays(iso, days) {
+      const [y, m, d] = iso.split("-").map(Number);
+      const dt = new Date(Date.UTC(y, m - 1, d + days));
+      return `${dt.getUTCFullYear()}-${pad(dt.getUTCMonth() + 1)}-${pad(dt.getUTCDate())}`;
+    }
+
+    function weekdayIndex(iso) {
+      const [y, m, d] = iso.split("-").map(Number);
+      return new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+    }
+
+    function minutesOfDay(p) {
+      return p.hour * 60 + p.minute;
+    }
+
+    function parseHm(hm) {
+      const [h, m] = hm.split(":").map(Number);
+      return h * 60 + m;
+    }
+
+    function currentWindow(p) {
+      const mins = minutesOfDay(p);
+      const morning = parseHm("06:00");
+      const evening = parseHm("15:00");
+      const night = parseHm("22:00");
+      if (mins >= morning && mins < evening) return { id: "morning", label: "Morning", start: "06:00", end: "15:00" };
+      if (mins >= evening && mins < night) return { id: "evening", label: "Evening", start: "15:00", end: "22:00" };
+      return { id: "night", label: "Night", start: "22:00", end: "06:00" };
+    }
+
+    function assignmentDate(p, shiftId) {
+      const today = isoFromParts(p);
+      if (shiftId === "night" && p.hour < 6) return addDays(today, -1);
+      return today;
+    }
+
+    function nextWindow(p) {
+      const cur = currentWindow(p);
+      if (cur.id === "morning") return { shift: { id: "evening", label: "Evening", start: "15:00", end: "22:00" }, date: isoFromParts(p) };
+      if (cur.id === "evening") return { shift: { id: "night", label: "Night", start: "22:00", end: "06:00" }, date: isoFromParts(p) };
+      const date = p.hour < 6 ? isoFromParts(p) : addDays(isoFromParts(p), 1);
+      return { shift: { id: "morning", label: "Morning", start: "06:00", end: "15:00" }, date };
+    }
+
+    function personFor(dateIso, shiftId) {
+      const exact = roster.days?.[dateIso]?.[shiftId];
+      if (exact) return { name: exact, inferred: false };
+      const day = weekdayIndex(dateIso);
+      if (day === 0 || day === 6) return { name: "", inferred: false };
+      const patterned = roster.weekdayPattern?.[shiftId];
+      if (!patterned) return { name: "", inferred: false };
+      return { name: patterned, inferred: true };
+    }
+
+    function isWeekendNow(p) {
+      const day = weekdayIndex(isoFromParts(p));
+      if (day === 6) return p.hour >= 6;
+      if (day === 0) return true;
+      return day === 1 && p.hour < 6;
+    }
+
+    function saturdayOfWeekend(iso) {
+      const day = weekdayIndex(iso);
+      if (day === 6) return iso;
+      if (day === 0) return addDays(iso, -1);
+      return addDays(iso, 6 - day);
+    }
+
+    function weekendFor(p) {
+      const today = isoFromParts(p);
+      const list = roster.weekends || [];
+      const covering = list.find((w) => w.start <= today && today <= w.end);
+      if (covering) return covering;
+      const upcoming = list
+        .filter((w) => w.start >= today)
+        .sort((a, b) => a.start.localeCompare(b.start))[0];
+      if (upcoming) return upcoming;
+
+      const saturday = saturdayOfWeekend(today);
+      return { start: saturday, end: addDays(saturday, 1), names: [], note: "Not in the loaded roster yet" };
+    }
+
+    function formatRange(start, end) {
+      const pretty = (iso) => {
+        const [y, m, d] = iso.split("-");
+        return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+          weekday: "short", day: "numeric", month: "short", timeZone: "UTC"
+        });
+      };
+      return `${pretty(start)} – ${pretty(end)}`;
+    }
+
+    function remainingLabel(p, shift) {
+      const endMins = shift.id === "night" ? parseHm("06:00") + (p.hour >= 22 ? 24 * 60 : 0) : parseHm(shift.end);
+      const nowMins = minutesOfDay(p) + (shift.id === "night" && p.hour >= 22 ? 0 : 0);
+      let left = endMins - minutesOfDay(p);
+      if (shift.id === "night" && p.hour >= 22) left = (24 * 60 + parseHm("06:00")) - minutesOfDay(p);
+      if (left < 0) left += 24 * 60;
+      const h = Math.floor(left / 60);
+      const m = left % 60;
+      return `${h}h ${pad(m)}m left`;
+    }
+
+    function startsInLabel(p, next) {
+      const target = parseHm(next.shift.start);
+      let left = target - minutesOfDay(p);
+      if (next.shift.id === "morning" && (p.hour >= 22 || currentWindow(p).id === "night")) {
+        left = (24 * 60 + parseHm("06:00")) - minutesOfDay(p);
+        if (p.hour < 6) left = parseHm("06:00") - minutesOfDay(p);
+      }
+      if (left < 0) left += 24 * 60;
+      const h = Math.floor(left / 60);
+      const m = left % 60;
+      return `starts in ${h}h ${pad(m)}m`;
+    }
+
+    function setName(el, name, fallback) {
+      el.textContent = name || fallback;
+      el.classList.toggle("empty", !name);
+    }
+
+    function pill(text) {
+      const span = document.createElement("span");
+      span.className = "pill";
+      span.textContent = text;
+      return span;
+    }
+
+    function render(now = new Date()) {
+      const p = istParts(now);
+      document.getElementById("clock").innerHTML = `${pad(p.hour)}:${pad(p.minute)}:${pad(p.second)} <small>IST · ${p.weekday} ${p.day} ${monthName(p.month)}</small>`;
+
+      const left = Math.max(0, REFRESH_MS - (Date.now() - pageLoadedAt));
+      const rm = Math.floor(left / 60000);
+      const rs = Math.floor((left % 60000) / 1000);
+      document.getElementById("refreshHint").textContent = `Auto-refresh in ${pad(rm)}:${pad(rs)}`;
+
+      const shift = currentWindow(p);
+      const dateIso = assignmentDate(p, shift.id);
+      const weekend = weekendFor(p);
+      const weekendActive = isWeekendNow(p) && weekdayIndex(isoFromParts(p)) !== 5;
+
+      let nowPerson = personFor(dateIso, shift.id);
+      let nxt = nextWindow(p);
+      let nextPerson = personFor(nxt.date, nxt.shift.id);
+
+      if (weekendActive && weekend.names?.length) {
+        nowPerson = { name: weekend.names.join("  ·  "), inferred: false };
+        const monday = addDays(weekend.end, weekdayIndex(weekend.end) === 0 ? 1 : 8 - weekdayIndex(weekend.end));
+        nxt = { shift: { id: "morning", label: "Monday morning", start: "06:00", end: "15:00" }, date: monday };
+        nextPerson = personFor(monday, "morning");
+      }
+
+      setName(document.getElementById("nowName"), nowPerson.name, "No one mapped for this shift");
+      const nowMeta = document.getElementById("nowMeta");
+      nowMeta.innerHTML = "";
+      nowMeta.append(
+        pill(weekendActive ? "Weekend on-call" : `${shift.label} shift`),
+        pill(remainingLabel(p, weekendActive ? { id: "night", end: "06:00" } : shift)),
+        pill(nowPerson.inferred ? "Weekday pattern" : "From roster")
+      );
+
+      setName(document.getElementById("nextName"), nextPerson.name, "Not on the loaded roster yet");
+      const nextMeta = document.getElementById("nextMeta");
+      nextMeta.innerHTML = "";
+      nextMeta.append(
+        pill(nxt.shift.label),
+        pill(startsInLabel(p, nxt)),
+        pill(nextPerson.inferred ? "Weekday pattern" : "From roster")
+      );
+
+      const weekendBox = document.getElementById("weekendNames");
+      weekendBox.innerHTML = "";
+      if (weekend.names?.length) {
+        weekend.names.forEach((n) => {
+          const pEl = document.createElement("p");
+          pEl.className = "name";
+          pEl.textContent = n;
+          weekendBox.appendChild(pEl);
+        });
+      } else {
+        const pEl = document.createElement("p");
+        pEl.className = "name empty";
+        pEl.textContent = "Drop the roster to load this";
+        weekendBox.appendChild(pEl);
+      }
+      const weekendMeta = document.getElementById("weekendMeta");
+      weekendMeta.innerHTML = "";
+      weekendMeta.append(pill(formatRange(weekend.start, weekend.end)));
+      if (weekend.note) weekendMeta.append(pill(weekend.note));
+
+      document.getElementById("source").textContent = roster.source || "Local roster";
+    }
+
+    function monthName(m) {
+      return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][m - 1];
+    }
+
+    function excelSerialToIso(n) {
+      const utc = Date.UTC(1899, 11, 30) + Math.round(n) * 86400000;
+      const d = new Date(utc);
+      return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
+    }
+
+    function cellToIso(value) {
+      if (value instanceof Date && !Number.isNaN(value.getTime())) {
+        return `${value.getUTCFullYear()}-${pad(value.getUTCMonth() + 1)}-${pad(value.getUTCDate())}`;
+      }
+      if (typeof value === "number" && value > 40000 && value < 60000) return excelSerialToIso(value);
+      if (typeof value === "string") {
+        const parsed = Date.parse(value);
+        if (!Number.isNaN(parsed)) {
+          const d = new Date(parsed);
+          return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        }
+      }
+      return "";
+    }
+
+    function classifyShift(text) {
+      const t = String(text || "").toLowerCase();
+      if (!t) return "";
+      if (/week\s*end|on[-\s]?call/.test(t)) return "weekend";
+      if (/night|shift\s*3/.test(t)) return "night";
+      if (/evening|aft|shift\s*2/.test(t)) return "evening";
+      if (/morning|shift\s*1/.test(t)) return "morning";
+      return "";
+    }
+
+    function splitNames(text) {
+      return String(text || "")
+        .split(/\s*(?:,|\/|&|\n| and )\s*/i)
+        .map((s) => s.replace(/^@/, "").trim())
+        .filter((s) => s && !classifyShift(s) && !/^shift/i.test(s));
+    }
+
+    function parseWorkbook(wb) {
+      const preferred = wb.SheetNames.find((n) => /roster|shift|shirt/i.test(n)) || wb.SheetNames[0];
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[preferred], { header: 1, raw: true, defval: "" });
+      const days = {};
+      const weekends = [];
+      let dateRow = -1;
+      let dateCols = [];
+
+      for (let r = 0; r < Math.min(rows.length, 20); r++) {
+        const cols = [];
+        (rows[r] || []).forEach((cell, c) => {
+          const iso = cellToIso(cell);
+          if (iso) cols.push({ c, iso });
+        });
+        if (cols.length >= 3) {
+          dateRow = r;
+          dateCols = cols;
+          break;
+        }
+      }
+
+      if (dateRow >= 0) {
+        for (let r = dateRow + 1; r < rows.length; r++) {
+          const row = rows[r] || [];
+          const label = classifyShift(row[0] || row[1] || "");
+          dateCols.forEach(({ c, iso }) => {
+            const names = splitNames(row[c]);
+            if (!names.length) return;
+            if (label === "weekend") {
+              weekends.push({ start: iso, end: iso, names });
+            } else if (label) {
+              days[iso] = days[iso] || {};
+              days[iso][label] = names.join(" · ");
+            } else {
+              const maybeShift = classifyShift(row[c]);
+              const person = String(row[0] || "").trim();
+              if (maybeShift && maybeShift !== "weekend" && person) {
+                days[iso] = days[iso] || {};
+                days[iso][maybeShift] = person;
+              }
+            }
+          });
+        }
+      }
+
+      const mergedWeekends = mergeWeekendDays(weekends);
+      if (!Object.keys(days).length && !mergedWeekends.length) {
+        throw new Error("Could not find dates and shift rows in that workbook.");
+      }
+
+      return {
+        timezone: TZ,
+        source: `Loaded from ${preferred} · ${new Date().toLocaleString("en-GB", { timeZone: TZ })} IST`,
+        shifts: DEFAULT_ROSTER.shifts,
+        weekdayPattern: inferPattern(days),
+        days,
+        weekends: mergedWeekends
+      };
+    }
+
+    function mergeWeekendDays(items) {
+      const byName = new Map();
+      items.forEach((w) => {
+        const key = w.names.join("|");
+        const cur = byName.get(key);
+        if (!cur) byName.set(key, { ...w });
+        else {
+          if (w.start < cur.start) cur.start = w.start;
+          if (w.end > cur.end) cur.end = w.end;
+        }
+      });
+      return [...byName.values()];
+    }
+
+    function inferPattern(days) {
+      const counts = { morning: {}, evening: {}, night: {} };
+      Object.entries(days).forEach(([iso, slots]) => {
+        const day = weekdayIndex(iso);
+        if (day === 0 || day === 6) return;
+        ["morning", "evening", "night"].forEach((k) => {
+          if (!slots[k]) return;
+          counts[k][slots[k]] = (counts[k][slots[k]] || 0) + 1;
+        });
+      });
+      const top = (obj) => Object.entries(obj).sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+      return { morning: top(counts.morning), evening: top(counts.evening), night: top(counts.night) };
+    }
+
+    async function handleFile(file) {
+      if (!file) return;
+      const data = await file.arrayBuffer();
+      const wb = XLSX.read(data, { type: "array", cellDates: true });
+      saveRoster(parseWorkbook(wb));
+    }
+
+    const drop = document.getElementById("drop");
+    const fileInput = document.getElementById("file");
+    drop.addEventListener("dragover", (e) => { e.preventDefault(); });
+    drop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
+
+    render();
+    setInterval(render, 1000);
+    setTimeout(() => location.reload(), REFRESH_MS);
+  </script>
+</body>
+</html>
