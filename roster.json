@@ -1,34 +1,957 @@
 {
   "timezone": "Asia/Kolkata",
-  "source": "Waiting for SharePoint sync. Weekday names are from #eclipt-sre handovers until the Excel can be read.",
-  "syncedAt": null,
-  "sheets": [],
+  "source": "SharePoint roster \u00b7 synced 08 Sep 2026, 23:55 IST",
+  "syncedAt": "2026-09-08T23:55:37.785931+05:30",
+  "sheets": [
+    "September",
+    "September for confluence",
+    "August"
+  ],
   "shifts": [
-    { "id": "morning", "label": "Morning", "start": "06:00", "end": "15:00" },
-    { "id": "evening", "label": "Evening", "start": "15:00", "end": "22:00" },
-    { "id": "night", "label": "Night", "start": "22:00", "end": "06:00" }
+    {
+      "id": "morning",
+      "label": "Morning",
+      "start": "06:00",
+      "end": "15:00"
+    },
+    {
+      "id": "evening",
+      "label": "Evening",
+      "start": "15:00",
+      "end": "22:00"
+    },
+    {
+      "id": "night",
+      "label": "Night",
+      "start": "22:00",
+      "end": "06:00"
+    }
   ],
   "weekdayPattern": {
-    "morning": "Arun Yadav",
+    "morning": "Harshita Jain",
     "evening": "Mahesh Suse",
-    "night": "Harshita Jain"
+    "night": "Tammisetti Sundar"
   },
   "days": {
-    "2026-08-31": { "morning": "Arun Yadav", "evening": "Mahesh Suse", "night": "Harshita Jain" },
-    "2026-09-01": { "morning": "Arun Yadav", "evening": "Mahesh Suse", "night": "Harshita Jain" },
-    "2026-09-02": { "morning": "Arun Yadav", "evening": "Mahesh Suse", "night": "Harshita Jain" },
-    "2026-09-03": { "morning": "Arun Yadav", "evening": "Mahesh Suse", "night": "Harshita Jain" },
-    "2026-09-04": { "morning": "Kiran Rathod", "evening": "Mahesh Suse", "night": "Harshita Jain" },
-    "2026-09-05": { "morning": "Tammisetti Sundar" },
-    "2026-09-07": { "morning": "Arun Yadav", "evening": "Mahesh Suse", "night": "Harshita Jain" },
-    "2026-09-08": { "morning": "Arun Yadav", "evening": "Mahesh Suse", "night": "Harshita Jain" }
+    "2026-08-10": {
+      "morning": "Harshita Jain",
+      "evening": "Mahesh Suse"
+    },
+    "2026-08-11": {
+      "morning": "Harshita Jain",
+      "evening": "Mahesh Suse"
+    },
+    "2026-08-12": {
+      "morning": "Harshita Jain",
+      "evening": "Mahesh Suse"
+    },
+    "2026-08-13": {
+      "morning": "Harshita Jain",
+      "evening": "Mahesh Suse"
+    },
+    "2026-08-14": {
+      "morning": "Harshita Jain",
+      "evening": "Mahesh Suse"
+    },
+    "2026-08-17": {
+      "morning": "Mahesh Suse",
+      "evening": "Harshita Jain"
+    },
+    "2026-08-18": {
+      "morning": "Mahesh Suse",
+      "evening": "Harshita Jain"
+    },
+    "2026-08-19": {
+      "morning": "Mahesh Suse",
+      "evening": "Harshita Jain"
+    },
+    "2026-08-20": {
+      "morning": "Mahesh Suse",
+      "evening": "Harshita Jain"
+    },
+    "2026-08-21": {
+      "morning": "Mahesh Suse",
+      "evening": "Harshita Jain"
+    },
+    "2026-08-24": {
+      "evening": "Mahesh Suse",
+      "morning": "Harshita Jain"
+    },
+    "2026-08-25": {
+      "evening": "Mahesh Suse",
+      "morning": "Harshita Jain"
+    },
+    "2026-08-26": {
+      "evening": "Mahesh Suse",
+      "morning": "Harshita Jain"
+    },
+    "2026-08-27": {
+      "evening": "Mahesh Suse",
+      "morning": "Harshita Jain"
+    },
+    "2026-08-28": {
+      "morning": "Kiran Rathod",
+      "evening": "Mahesh Suse"
+    },
+    "2026-08-31": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-01": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-02": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-03": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-04": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-07": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-08": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-09": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-10": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-11": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Harshita Jain"
+    },
+    "2026-09-14": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-15": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-16": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-17": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-18": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-21": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-22": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-23": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-24": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-25": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-09-28": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-09-29": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-09-30": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-01": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-02": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-05": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-06": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-07": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-08": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-09": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-10-12": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-13": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-14": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-15": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-16": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-19": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-20": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-21": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-22": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-23": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Kiran Rathod"
+    },
+    "2026-10-26": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-10-27": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-10-28": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-10-29": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-10-30": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-11-02": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-11-03": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-11-04": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-11-05": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-11-06": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2026-11-09": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-10": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-11": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-12": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-13": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-16": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-17": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-18": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-19": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-20": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2026-11-23": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-11-24": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-11-25": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-11-26": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-11-27": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-11-30": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-12-01": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-12-02": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-12-03": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-12-04": {
+      "evening": "Arun Yadav",
+      "morning": "Harshita Jain",
+      "night": "Tammisetti Sundar"
+    },
+    "2026-12-07": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-08": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-09": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-10": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-11": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-14": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-15": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-16": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-17": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-18": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2026-12-21": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-22": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-23": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-24": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-25": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-28": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-29": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-30": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2026-12-31": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2027-01-01": {
+      "evening": "Arun Yadav",
+      "night": "Harshita Jain",
+      "morning": "Kiran Rathod"
+    },
+    "2027-01-04": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-05": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-06": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-07": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-08": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-11": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-12": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-13": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-14": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-15": {
+      "night": "Mahesh Suse",
+      "evening": "Harshita Jain",
+      "morning": "Tammisetti Sundar"
+    },
+    "2027-01-18": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-19": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-20": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-21": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-22": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-25": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-26": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-27": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-28": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-01-29": {
+      "morning": "Arun Yadav",
+      "evening": "Mahesh Suse",
+      "night": "Kiran Rathod"
+    },
+    "2027-02-01": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-02": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-03": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-04": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-05": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-08": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-09": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-10": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-11": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-12": {
+      "morning": "Harshita Jain",
+      "evening": "Kiran Rathod",
+      "night": "Tammisetti Sundar"
+    },
+    "2027-02-15": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-16": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-17": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-18": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-19": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-22": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-23": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-24": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-25": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    },
+    "2027-02-26": {
+      "night": "Arun Yadav",
+      "morning": "Mahesh Suse",
+      "evening": "Tammisetti Sundar"
+    }
   },
   "weekends": [
     {
-      "start": "2026-09-06",
-      "end": "2026-09-07",
-      "names": ["Kiran Rathod", "Tammisetti Sundar"],
-      "note": "Monitor mail and chat"
+      "start": "2026-09-05",
+      "end": "2026-09-06",
+      "names": [
+        "Kiran Rathod",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2026-09-12",
+      "end": "2026-09-13",
+      "names": [
+        "Kiran Rathod",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2026-09-19",
+      "end": "2026-09-20",
+      "names": [
+        "Arun Yadav",
+        "Mahesh Suse"
+      ]
+    },
+    {
+      "start": "2026-09-26",
+      "end": "2026-09-27",
+      "names": [
+        "Arun Yadav",
+        "Mahesh Suse"
+      ]
+    },
+    {
+      "start": "2026-10-03",
+      "end": "2026-10-04",
+      "names": [
+        "Harshita Jain",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-10-10",
+      "end": "2026-10-11",
+      "names": [
+        "Harshita Jain",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-10-17",
+      "end": "2026-10-18",
+      "names": [
+        "Mahesh Suse",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "names": [
+        "Mahesh Suse",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2026-10-31",
+      "end": "2026-11-01",
+      "names": [
+        "Arun Yadav",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-11-07",
+      "end": "2026-11-08",
+      "names": [
+        "Arun Yadav",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-11-14",
+      "end": "2026-11-15",
+      "names": [
+        "Harshita Jain",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2026-11-21",
+      "end": "2026-11-22",
+      "names": [
+        "Harshita Jain",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "names": [
+        "Mahesh Suse",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "names": [
+        "Mahesh Suse",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "names": [
+        "Harshita Jain",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-12-19",
+      "end": "2026-12-20",
+      "names": [
+        "Harshita Jain",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2026-12-26",
+      "end": "2026-12-27",
+      "names": [
+        "Mahesh Suse",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2027-01-02",
+      "end": "2027-01-03",
+      "names": [
+        "Mahesh Suse",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2027-01-09",
+      "end": "2027-01-10",
+      "names": [
+        "Arun Yadav",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2027-01-16",
+      "end": "2027-01-17",
+      "names": [
+        "Arun Yadav",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2027-01-23",
+      "end": "2027-01-24",
+      "names": [
+        "Harshita Jain",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2027-01-30",
+      "end": "2027-01-31",
+      "names": [
+        "Harshita Jain",
+        "Tammisetti Sundar"
+      ]
+    },
+    {
+      "start": "2027-02-06",
+      "end": "2027-02-07",
+      "names": [
+        "Arun Yadav",
+        "Mahesh Suse"
+      ]
+    },
+    {
+      "start": "2027-02-13",
+      "end": "2027-02-14",
+      "names": [
+        "Arun Yadav",
+        "Mahesh Suse"
+      ]
+    },
+    {
+      "start": "2027-02-20",
+      "end": "2027-02-21",
+      "names": [
+        "Harshita Jain",
+        "Kiran Rathod"
+      ]
+    },
+    {
+      "start": "2027-02-27",
+      "end": "2027-02-28",
+      "names": [
+        "Harshita Jain",
+        "Kiran Rathod"
+      ]
     }
   ]
 }
