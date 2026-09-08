@@ -132,42 +132,15 @@
       font-size: 13px;
     }
 
-    .drop {
-      margin-top: 16px;
-      border: 1px dashed rgba(232, 236, 243, 0.16);
-      border-radius: 16px;
-      padding: 16px 18px;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .drop strong { display: block; margin-bottom: 4px; }
-    .drop span { color: var(--muted); font-size: 13px; }
-
-    button, .file-btn {
-      appearance: none;
-      border: 0;
-      border-radius: 999px;
-      background: #eef2f7;
-      color: #10151d;
-      font: inherit;
-      font-weight: 600;
-      padding: 10px 14px;
-      cursor: pointer;
-    }
-
     a { color: inherit; }
 
     .warn { color: var(--now); }
     .empty { color: var(--muted); font-size: 28px; letter-spacing: -0.04em; }
 
     @media (max-width: 860px) {
-      header, .grid, .foot, .drop { display: block; }
+      header, .grid, .foot { display: block; }
       .clock-box { text-align: left; margin-top: 16px; }
       .card { margin-bottom: 12px; }
-      .drop button { margin-top: 12px; }
     }
   </style>
 </head>
@@ -204,34 +177,21 @@
       </section>
     </div>
 
-    <div class="drop" id="drop">
-      <div>
-        <strong>Load the official roster</strong>
-        <span>SharePoint needs login, so drop <em>Eclipt OS L2 Roster.xlsx</em> here. The board keeps using it after refresh.</span>
-      </div>
-      <label class="file-btn">
-        Choose Excel
-        <input id="file" type="file" accept=".xlsx,.xls,.csv" hidden />
-      </label>
-    </div>
-
     <div class="foot">
       <div id="source"></div>
       <div>
-        <a href="https://mckinsey-my.sharepoint.com/:x:/r/personal/sophia_solomon_external_mckinsey_com/_layouts/15/doc2.aspx?sourcedoc=%7B9F40FC09-FF8D-4B6B-92D2-FAA9E7F722D2%7D&file=Eclipt%20OS%20L2%20Roster.xlsx&action=default&mobileredirect=true&share=cQoJ_ECfjf9rS5LS-qnn9yLSEgUChleFsg8MpdMPWL_MJpJb0A" target="_blank" rel="noreferrer">Open roster in SharePoint</a>
+        <a href="https://mckinsey-my.sharepoint.com/:x:/r/personal/sophia_solomon_external_mckinsey_com/_layouts/15/Doc.aspx?sourcedoc=%7B9F40FC09-FF8D-4B6B-92D2-FAA9E7F722D2%7D&file=Eclipt%20OS%20L2%20Roster.xlsx&action=default&mobileredirect=true&share=cQoJ_ECfjf9rS5LS-qnn9yLSEgUChleFsg8MpdMPWL_MJpJb0A" target="_blank" rel="noreferrer">Open roster in SharePoint</a>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script>
     const TZ = "Asia/Kolkata";
     const REFRESH_MS = 10 * 60 * 1000;
-    const STORAGE_KEY = "eclipt-l2-roster-v1";
 
     const DEFAULT_ROSTER = {
       timezone: TZ,
-      source: "Reconstructed from #eclipt-sre handovers. Drop the Excel file to replace this with the official roster.",
+      source: "Waiting for the SharePoint roster sync.",
       shifts: [
         { id: "morning", label: "Morning", start: "06:00", end: "15:00" },
         { id: "evening", label: "Evening", start: "15:00", end: "22:00" },
@@ -262,20 +222,15 @@
       ]
     };
 
-    let roster = loadRoster();
+    let roster = structuredClone(DEFAULT_ROSTER);
     const pageLoadedAt = Date.now();
 
-    function loadRoster() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-        if (saved && saved.days) return saved;
-      } catch (_) {}
-      return structuredClone(DEFAULT_ROSTER);
-    }
-
-    function saveRoster(next) {
-      roster = next;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    async function loadRoster() {
+      const res = await fetch(`roster.json?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`roster.json ${res.status}`);
+      const data = await res.json();
+      if (!data || !data.days) throw new Error("roster.json is empty");
+      roster = data;
       render();
     }
 
@@ -492,7 +447,7 @@
       } else {
         const pEl = document.createElement("p");
         pEl.className = "name empty";
-        pEl.textContent = "Drop the roster to load this";
+        pEl.textContent = "Waiting for roster sync";
         weekendBox.appendChild(pEl);
       }
       const weekendMeta = document.getElementById("weekendMeta");
@@ -507,150 +462,14 @@
       return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][m - 1];
     }
 
-    function excelSerialToIso(n) {
-      const utc = Date.UTC(1899, 11, 30) + Math.round(n) * 86400000;
-      const d = new Date(utc);
-      return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
-    }
-
-    function cellToIso(value) {
-      if (value instanceof Date && !Number.isNaN(value.getTime())) {
-        return `${value.getUTCFullYear()}-${pad(value.getUTCMonth() + 1)}-${pad(value.getUTCDate())}`;
-      }
-      if (typeof value === "number" && value > 40000 && value < 60000) return excelSerialToIso(value);
-      if (typeof value === "string") {
-        const parsed = Date.parse(value);
-        if (!Number.isNaN(parsed)) {
-          const d = new Date(parsed);
-          return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-        }
-      }
-      return "";
-    }
-
-    function classifyShift(text) {
-      const t = String(text || "").toLowerCase();
-      if (!t) return "";
-      if (/week\s*end|on[-\s]?call/.test(t)) return "weekend";
-      if (/night|shift\s*3/.test(t)) return "night";
-      if (/evening|aft|shift\s*2/.test(t)) return "evening";
-      if (/morning|shift\s*1/.test(t)) return "morning";
-      return "";
-    }
-
-    function splitNames(text) {
-      return String(text || "")
-        .split(/\s*(?:,|\/|&|\n| and )\s*/i)
-        .map((s) => s.replace(/^@/, "").trim())
-        .filter((s) => s && !classifyShift(s) && !/^shift/i.test(s));
-    }
-
-    function parseWorkbook(wb) {
-      const preferred = wb.SheetNames.find((n) => /roster|shift|shirt/i.test(n)) || wb.SheetNames[0];
-      const rows = XLSX.utils.sheet_to_json(wb.Sheets[preferred], { header: 1, raw: true, defval: "" });
-      const days = {};
-      const weekends = [];
-      let dateRow = -1;
-      let dateCols = [];
-
-      for (let r = 0; r < Math.min(rows.length, 20); r++) {
-        const cols = [];
-        (rows[r] || []).forEach((cell, c) => {
-          const iso = cellToIso(cell);
-          if (iso) cols.push({ c, iso });
-        });
-        if (cols.length >= 3) {
-          dateRow = r;
-          dateCols = cols;
-          break;
-        }
-      }
-
-      if (dateRow >= 0) {
-        for (let r = dateRow + 1; r < rows.length; r++) {
-          const row = rows[r] || [];
-          const label = classifyShift(row[0] || row[1] || "");
-          dateCols.forEach(({ c, iso }) => {
-            const names = splitNames(row[c]);
-            if (!names.length) return;
-            if (label === "weekend") {
-              weekends.push({ start: iso, end: iso, names });
-            } else if (label) {
-              days[iso] = days[iso] || {};
-              days[iso][label] = names.join(" · ");
-            } else {
-              const maybeShift = classifyShift(row[c]);
-              const person = String(row[0] || "").trim();
-              if (maybeShift && maybeShift !== "weekend" && person) {
-                days[iso] = days[iso] || {};
-                days[iso][maybeShift] = person;
-              }
-            }
-          });
-        }
-      }
-
-      const mergedWeekends = mergeWeekendDays(weekends);
-      if (!Object.keys(days).length && !mergedWeekends.length) {
-        throw new Error("Could not find dates and shift rows in that workbook.");
-      }
-
-      return {
-        timezone: TZ,
-        source: `Loaded from ${preferred} · ${new Date().toLocaleString("en-GB", { timeZone: TZ })} IST`,
-        shifts: DEFAULT_ROSTER.shifts,
-        weekdayPattern: inferPattern(days),
-        days,
-        weekends: mergedWeekends
-      };
-    }
-
-    function mergeWeekendDays(items) {
-      const byName = new Map();
-      items.forEach((w) => {
-        const key = w.names.join("|");
-        const cur = byName.get(key);
-        if (!cur) byName.set(key, { ...w });
-        else {
-          if (w.start < cur.start) cur.start = w.start;
-          if (w.end > cur.end) cur.end = w.end;
-        }
-      });
-      return [...byName.values()];
-    }
-
-    function inferPattern(days) {
-      const counts = { morning: {}, evening: {}, night: {} };
-      Object.entries(days).forEach(([iso, slots]) => {
-        const day = weekdayIndex(iso);
-        if (day === 0 || day === 6) return;
-        ["morning", "evening", "night"].forEach((k) => {
-          if (!slots[k]) return;
-          counts[k][slots[k]] = (counts[k][slots[k]] || 0) + 1;
-        });
-      });
-      const top = (obj) => Object.entries(obj).sort((a, b) => b[1] - a[1])[0]?.[0] || "";
-      return { morning: top(counts.morning), evening: top(counts.evening), night: top(counts.night) };
-    }
-
-    async function handleFile(file) {
-      if (!file) return;
-      const data = await file.arrayBuffer();
-      const wb = XLSX.read(data, { type: "array", cellDates: true });
-      saveRoster(parseWorkbook(wb));
-    }
-
-    const drop = document.getElementById("drop");
-    const fileInput = document.getElementById("file");
-    drop.addEventListener("dragover", (e) => { e.preventDefault(); });
-    drop.addEventListener("drop", (e) => {
-      e.preventDefault();
-      handleFile(e.dataTransfer.files[0]);
-    });
-    fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
-
     render();
+    loadRoster().catch(() => {
+      document.getElementById("source").textContent = "SharePoint sync has not published roster.json yet";
+    });
     setInterval(render, 1000);
+    setInterval(() => {
+      loadRoster().catch(() => {});
+    }, REFRESH_MS);
     setTimeout(() => location.reload(), REFRESH_MS);
   </script>
 </body>
